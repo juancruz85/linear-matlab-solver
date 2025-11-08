@@ -1,0 +1,35 @@
+clear;
+clc;
+close all
+
+%omar project thing: solver for any-step query
+
+syms x  %allowing x to exist
+
+prompt = "Input query: ";
+inputStr = input(prompt, 's'); % Get user input as a string
+
+%eq1 = input(prompt); %setting eq1 to user input equation
+
+inputStr = regexprep(inputStr, '(\d)([a-zA-Z])', '$1*$2'); %inserting multiplication symbol
+%find first =
+splitEq = regexp(inputStr, '([^=]*)=([^=]*)', 'tokens');
+
+if isempty(splitEq)
+    error('Invalid equation: must contain exactly one equals sign');
+end
+
+leftPart = strtrim(splitEq{1}{1});
+rightPart = strtrim(splitEq{1}{2});
+
+combinedStr = [leftPart '=' rightPart];
+
+inputStr = strrep(inputStr, '=', '=='); %inserting equals 
+disp(inputStr)
+eq1 = str2sym(inputStr);
+sol = solve(eq1, x)
+
+%sol=solve([eq1], [x])  
+
+
+%8x+8=15(x+9)
